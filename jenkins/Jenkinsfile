@@ -1,9 +1,12 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven 3'  // Make sure this matches the name in Global Tool Configuration
+    }
     stages {
         stage('Build') {
             steps {
-                withMaven(maven: 'Maven') {
+                withMaven(maven: 'Maven 3') {  // Use the same name here
                     sh 'mvn -B -DskipTests clean package'
                 }
             }
@@ -14,7 +17,7 @@ pipeline {
             }
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml'
+                    junit 'target/surefire-reports/*.xml'  // Ensure this path matches your test reports
                 }
             }
         }
